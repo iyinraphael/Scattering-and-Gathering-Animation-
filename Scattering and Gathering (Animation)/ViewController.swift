@@ -43,14 +43,30 @@ class ViewController: UIViewController {
         
     }
     
+    var isToggle: Bool = false
+    
+    func isToggledButton(){
+        isToggle = !isToggle
+    }
+    
     
     @IBOutlet weak var imageView: UIView!
     
 
     @IBAction func toggle(_ sender: Any) {
         
-        scatter()
+        if isToggle == false{
+             scatter()
+        
+        }else{
+            
+            gather()
+        }
+        
+        isToggledButton()
+    
     }
+    
     
     func scatter() {
         
@@ -67,6 +83,7 @@ class ViewController: UIViewController {
                 let num2 = Int.random(in: 100...200)
                 
                 let randColor = Int.random(in: 0...5)
+                
                 
                 label.transform = CGAffineTransform(rotationAngle: CGFloat(integerLiteral: num2) )
                 label.backgroundColor = self.colors[randColor]
@@ -89,13 +106,30 @@ class ViewController: UIViewController {
             self.imageView.alpha = 1.0
         }
         
-        var count = 0.0
+        var count: CGFloat = 1
+        
         for label in labels{
             
-            let space: CGFloat =  (dimension * count) + (8 * count)
-            var frame = label.frame
-            frame.origin.x =
+            UIView.animate(withDuration: 0.5) {
+                
+                let space: CGFloat =  (self.dimension * count) + (8 * count)
+                
+                label.transform = CGAffineTransform.identity
+                
+                var frame = label.frame
+                frame.origin.x = space
+                frame.origin.y = 100
+            
+                frame.size.height = 80
+                frame.size.width = 80
+                
+                label.frame = frame
+                label.backgroundColor = .white
+                
+                count += 1
+            }
         }
+            
     }
 }
 
